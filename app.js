@@ -593,6 +593,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 渲染网站更新历程
     renderUpdateHistory();
     
+    // 初始化应用中心
+    AppCenter.init();
+    
     console.log('✅ 功能加载完成！');
 });
 
@@ -644,5 +647,184 @@ window.XiaoqianApp = {
     updateHistoryData,
     renderUpdateHistory,
     showUpdateDetail,
-    calculateBirthDays
+    calculateBirthDays,
+    AppCenter
 };
+
+// ==================== QQ空间功能区交互 ====================
+
+// 应用中心功能
+const AppCenter = {
+    // 签到功能
+    checkIn: () => {
+        const lastCheckIn = Storage.get('lastCheckIn');
+        const today = new Date().toDateString();
+        
+        if (lastCheckIn === today) {
+            UI.showToast('今天已经签到过了哦~ 🌸');
+            return;
+        }
+        
+        Storage.set('lastCheckIn', today);
+        const days = Storage.get('checkInDays') || 0;
+        Storage.set('checkInDays', days + 1);
+        
+        UI.showToast(`签到成功！连续签到 ${days + 1} 天 🎉`);
+        AppCenter.showCheckInEffect();
+    },
+    
+    // 签到特效
+    showCheckInEffect: () => {
+        const effect = document.createElement('div');
+        effect.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            z-index: 10000;
+            animation: checkInPop 1s ease-out forwards;
+            pointer-events: none;
+        `;
+        effect.textContent = '🎉 +1';
+        document.body.appendChild(effect);
+        
+        setTimeout(() => effect.remove(), 1000);
+    },
+    
+    // 花藤操作
+    flowerActions: {
+        water: () => {
+            const waterCount = Storage.get('waterCount') || 0;
+            if (waterCount >= 3) {
+                UI.showToast('今天已经浇过水了，明天再来吧~ 💧');
+                return;
+            }
+            Storage.set('waterCount', waterCount + 1);
+            UI.showToast('浇水成功！向日葵很开心~ 🌻');
+            AppCenter.showFlowerEffect('💧');
+        },
+        
+        sun: () => {
+            const sunCount = Storage.get('sunCount') || 0;
+            if (sunCount >= 3) {
+                UI.showToast('向日葵今天已经晒够太阳了~ ☀️');
+                return;
+            }
+            Storage.set('sunCount', sunCount + 1);
+            UI.showToast('晒太阳成功！向日葵更有活力了~ 🌻');
+            AppCenter.showFlowerEffect('☀️');
+        }
+    },
+    
+    // 花藤特效
+    showFlowerEffect: (emoji) => {
+        const flower = document.querySelector('.flower-display');
+        if (flower) {
+            flower.style.transform = 'scale(1.3)';
+            flower.style.transition = 'transform 0.3s';
+            
+            const effect = document.createElement('div');
+            effect.style.cssText = `
+                position: absolute;
+                font-size: 2rem;
+                animation: floatUp 1s ease-out forwards;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            `;
+            effect.textContent = emoji;
+            flower.parentElement.appendChild(effect);
+            
+            setTimeout(() => {
+                flower.style.transform = 'scale(1)';
+                effect.remove();
+            }, 1000);
+        }
+    },
+    
+    // 装扮空间
+    decorate: () => {
+        UI.showToast('装扮功能开发中，敬请期待~ 🎨');
+    },
+    
+    // 音乐盒
+    music: () => {
+        UI.showToast('音乐盒功能开发中，敬请期待~ 🎵');
+    },
+    
+    // 礼物
+    gift: () => {
+        UI.showToast('送礼物功能开发中，敬请期待~ 🎁');
+    },
+    
+    // 游戏
+    game: () => {
+        UI.showToast('游戏中心开发中，敬请期待~ 🎪');
+    },
+    
+    // 好友
+    friends: () => {
+        UI.showToast('好友功能开发中，敬请期待~ 👥');
+    },
+    
+    // 设置
+    settings: () => {
+        UI.showToast('设置功能开发中，敬请期待~ ⚙️');
+    },
+    
+    // 初始化应用中心事件
+    init: () => {
+        // 应用网格点击事件
+        document.querySelectorAll('.app-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const actions = ['decorate', 'music', 'gift', 'checkIn', 'flowerActions', 'game', 'friends', 'settings'];
+                if (actions[index]) {
+                    if (actions[index] === 'checkIn') {
+                        AppCenter.checkIn();
+                    } else if (actions[index] === 'flowerActions') {
+                        // 花藤是单独处理的
+                        return;
+                    } else {
+                        AppCenter[actions[index]]?.();
+                    }
+                }
+            });
+        });
+        
+        // 花藤操作按钮
+        const flowerBtns = document.querySelectorAll('.flower-btn');
+        if (flowerBtns.length >= 2) {
+            flowerBtns[0].addEventListener('click', AppCenter.flowerActions.water);
+            flowerBtns[1].addEventListener('click', AppCenter.flowerActions.sun);
+        }
+        
+        // 导航工具按钮
+        const toolBtns = document.querySelectorAll('.tool-btn');
+        if (toolBtns.length >= 3) {
+            toolBtns[0].addEventListener('click', AppCenter.decorate);
+            toolBtns[1].addEventListener('click', AppCenter.settings);
+            toolBtns[2].addEventListener('click', () => {
+                UI.showToast('已退出登录~ 👋');
+            });
+        }
+    }
+};
+
+// 添加签到动画样式
+if (!document.getElementById('checkin-style')) {
+    const style = document.createElement('style');
+    style.id = 'checkin-style';
+    style.textContent = `
+        @keyframes checkInPop {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1) translateY(-100px); opacity: 0; }
+        }
+        @keyframes floatUp {
+            0% { transform: translate(-50%, -50%); opacity: 1; }
+            100% { transform: translate(-50%, -150%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+}

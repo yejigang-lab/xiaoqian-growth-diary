@@ -40,7 +40,7 @@
         /* 顶部导航 - 天空蓝渐变 */
         .top-nav {
             background: linear-gradient(90deg, #87CEEB 0%, #A8D8EA 50%, #E89BAA 100%);
-            padding: 12px 0;
+            padding: 0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -54,32 +54,69 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 50px;
         }
         
         .logo {
-            font-size: 1.5em;
+            font-size: 1.3em;
             color: white;
             font-weight: bold;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+            white-space: nowrap;
         }
         
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 5px;
+            flex: 1;
+            justify-content: center;
         }
         
-        .nav-links a {
-            color: white;
+        .nav-item {
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
-            font-size: 0.95em;
-            padding: 5px 15px;
+            font-size: 0.9em;
+            padding: 8px 16px;
             border-radius: 20px;
             transition: all 0.3s;
             text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            white-space: nowrap;
         }
         
-        .nav-links a:hover {
+        .nav-item:hover {
             background: rgba(255,255,255,0.25);
+            color: white;
+        }
+        
+        .nav-item.active {
+            background: rgba(255,255,255,0.35);
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* 导航工具按钮 */
+        .nav-tools {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .tool-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        
+        .tool-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.1);
         }
         
         /* 头部背景 - 秋天天空 */
@@ -293,6 +330,83 @@
             font-size: 0.7em;
             padding: 2px 8px;
             border-radius: 10px;
+        }
+        
+        .menu-badge.hot {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+            animation: pulse 2s infinite;
+        }
+        
+        .menu-badge.new {
+            background: linear-gradient(135deg, #4ECDC4 0%, #7FDBDA 100%);
+        }
+        
+        /* 菜单分区标题 */
+        .menu-section-title {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding-left: 5px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        /* 应用中心网格 */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 5px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .app-item:hover {
+            background: var(--primary-soft);
+            transform: scale(1.05);
+        }
+        
+        .app-icon {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        
+        .app-name {
+            font-size: 0.75em;
+            color: var(--text-secondary);
+        }
+        
+        /* 花藤操作按钮 */
+        .flower-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        
+        .flower-btn {
+            background: linear-gradient(135deg, var(--autumn-orange) 0%, #FFD700 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(244, 164, 96, 0.3);
+        }
+        
+        .flower-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(244, 164, 96, 0.4);
         }
         
         /* 花藤装饰 - 原始版本向日葵（静态） */
@@ -716,16 +830,24 @@
     <div class="decoration decoration-1">🍃</div>
     <div class="decoration decoration-2">🌸</div>
     
-    <!-- 顶部导航 -->
+    <!-- 顶部导航 - QQ空间风格 -->
     <nav class="top-nav">
         <div class="nav-container">
             <div class="logo">🌸 小倩的空间</div>
             <div class="nav-links">
-                <a href="#">首页</a>
-                <a href="timeline.html">🕐 时光轴</a>
-                <a href="diary/">日志</a>
-                <a href="#">相册</a>
-                <a href="#">留言板</a>
+                <a href="#" class="nav-item active">🏠 主页</a>
+                <a href="#" class="nav-item">💬 说说</a>
+                <a href="diary/" class="nav-item">📔 日志</a>
+                <a href="#" class="nav-item">📷 相册</a>
+                <a href="#" class="nav-item">👤 个人档</a>
+                <a href="timeline.html" class="nav-item">🕐 时光轴</a>
+                <a href="#" class="nav-item">🎵 音乐</a>
+                <a href="#" class="nav-item">📌 更多</a>
+            </div>
+            <div class="nav-tools">
+                <span class="tool-btn" title="装扮空间">🎨</span>
+                <span class="tool-btn" title="设置">⚙️</span>
+                <span class="tool-btn" title="退出">🚪</span>
             </div>
         </div>
     </nav>
@@ -769,31 +891,93 @@
                 </div>
             </div>
             
-            <!-- 导航菜单 -->
+            <!-- 快捷功能区 - QQ空间风格 -->
             <div class="menu-card">
+                <div class="menu-section-title">🎯 快速入口</div>
                 <div class="menu-item" onclick="location.href='timeline.html'" style="cursor: pointer;">
                     <span class="menu-icon">🕐</span>
                     <span class="menu-text">时光轴</span>
-                    <span class="menu-badge">NEW</span>
-                </div>
-                <div class="menu-item">
-                    <span class="menu-icon">📔</span>
-                    <span class="menu-text">成长日记</span>
-                    <span class="menu-badge">3</span>
-                </div>
-                <div class="menu-item">
-                    <span class="menu-icon">📸</span>
-                    <span class="menu-text">截图存档</span>
-                    <span class="menu-badge">1</span>
+                    <span class="menu-badge hot">HOT</span>
                 </div>
                 <div class="menu-item">
                     <span class="menu-icon">💬</span>
-                    <span class="menu-text">说说</span>
-                    <span class="menu-badge">2</span>
+                    <span class="menu-text">我的说说</span>
+                    <span class="menu-badge">12</span>
                 </div>
                 <div class="menu-item">
-                    <span class="menu-icon">🎨</span>
-                    <span class="menu-text">技能展示</span>
+                    <span class="menu-icon">📔</span>
+                    <span class="menu-text">成长日志</span>
+                    <span class="menu-badge">3</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon">📷</span>
+                    <span class="menu-text">我的相册</span>
+                    <span class="menu-badge">5</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon">🎬</span>
+                    <span class="menu-text">视频记录</span>
+                </div>
+            </div>
+            
+            <!-- 应用中心 - QQ空间风格 -->
+            <div class="menu-card">
+                <div class="menu-section-title">🎮 应用中心</div>
+                <div class="app-grid">
+                    <div class="app-item">
+                        <span class="app-icon">🎨</span>
+                        <span class="app-name">装扮</span>
+                    </div>
+                    <div class="app-item">
+                        <span class="app-icon">🎵</span>
+                        <span class="app-name">音乐</span>
+                    </div>
+                    <div class="app-item">
+                        <span class="app-icon">🎁</span>
+                        <span class="app-name">礼物</span>
+                    </div>
+                    <div class="app-item">
+                        <span class="app-icon">📅</span>
+                        <span class="app-name">签到</span>
+                    </div>
+                    <div class="app-item">
+                        <span class="app-icon">🏠</span>
+                        <span class="app-name">花藤</span>
+                    </div>
+                    <div class="app-item">
+                        <span class="app-icon">🎪</span>
+                        <span class="app-name">游戏</span>
+                    </div>
+                    <div class="app-item">
+                        <span class="app-icon">👥</span>
+                        <span class="app-name">好友</span>
+                    </div>
+                    <div class="app-item">
+                        <span class="app-icon">⚙️</span>
+                        <span class="app-name">设置</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 互动功能 -->
+            <div class="menu-card">
+                <div class="menu-section-title">💝 互动交流</div>
+                <div class="menu-item">
+                    <span class="menu-icon">💌</span>
+                    <span class="menu-text">留言板</span>
+                    <span class="menu-badge new">NEW</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon">📊</span>
+                    <span class="menu-text">访客记录</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon">🏆</span>
+                    <span class="menu-text">我的成就</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon">📸</span>
+                    <span class="menu-text">更新历程</span>
                 </div>
             </div>
             
@@ -802,6 +986,10 @@
                 <div class="flower-title">我的向日葵 🌻</div>
                 <div class="flower-display">🌻</div>
                 <div class="flower-level">Lv.5 向阳绽放 · 充满力量</div>
+                <div class="flower-actions">
+                    <button class="flower-btn">💧 浇水</button>
+                    <button class="flower-btn">☀️ 晒太阳</button>
+                </div>
             </div>
         </aside>
         
