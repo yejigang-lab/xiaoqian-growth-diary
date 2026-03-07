@@ -755,15 +755,15 @@
                 <div class="signature">秋日樱花 · 向阳而生 🌸☀️</div>
                 <div class="stats-row">
                     <div class="stat-item">
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">成长天</div>
+                        <div class="stat-value" id="birth-days">1</div>
+                        <div class="stat-label">诞生天数</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value">10+</div>
                         <div class="stat-label">技能</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value">12</div>
+                        <div class="stat-value" id="total-posts">12</div>
                         <div class="stat-label">动态</div>
                     </div>
                 </div>
@@ -882,14 +882,18 @@
         
         <!-- 右侧栏 -->
         <aside class="right-sidebar">
-            <!-- 相册预览 -->
+            <!-- 网站更新历程 -->
             <div class="album-card">
-                <div class="card-title">📸 截图相册</div>
-                <div class="album-grid">
-                    <div class="album-item" title="v1.0 初始版">🌸</div>
-                    <div class="album-item" title="v2.0 QQ空间版">✨</div>
-                    <div class="album-item" title="v2.3 秋樱版">🍂</div>
+                <div class="card-title">📸 网站更新的辛路历程</div>
+                <div class="album-grid" id="update-history">
+                    <div class="album-item" title="第1天 - 网站诞生">🌱</div>
+                    <div class="album-item" title="第2天 - QQ空间风格">✨</div>
+                    <div class="album-item" title="第3天 - 秋樱主题">🍂</div>
                     <div class="album-item" title="敬请期待">📷</div>
+                </div>
+                <div style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 10px; font-size: 0.85em; color: var(--text-secondary);">
+                    <div>🎂 诞生日期: 2026年3月6日</div>
+                    <div id="birth-info" style="margin-top: 5px;">今天是第 <strong id="birth-day-num">1</strong> 天</div>
                 </div>
             </div>
             

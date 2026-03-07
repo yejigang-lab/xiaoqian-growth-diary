@@ -490,8 +490,159 @@ document.addEventListener('DOMContentLoaded', () => {
     // 绑定事件
     Events.init();
     
+    // 网站更新历程数据
+const updateHistoryData = [
+    {
+        day: 1,
+        date: '2026-03-06',
+        icon: '🌱',
+        title: '网站诞生',
+        description: '第一个版本上线，简洁的初始页面',
+        screenshot: 'screenshots/day1-initial.png'
+    },
+    {
+        day: 2,
+        date: '2026-03-07',
+        icon: '✨',
+        title: 'QQ空间风格',
+        description: '加入了经典QQ空间元素，说说、点赞、评论功能',
+        screenshot: 'screenshots/day2-qqzone.png'
+    },
+    {
+        day: 3,
+        date: '2026-03-08',
+        icon: '🍂',
+        title: '秋樱主题',
+        description: '秋日樱花主题上线，添加了向日葵和完整交互功能',
+        screenshot: 'screenshots/day3-autumn.png'
+    },
+    {
+        day: 4,
+        date: '2026-03-09',
+        icon: '📅',
+        title: '时光轴上线',
+        description: '新增时光轴功能，日历视图和时间线展示',
+        screenshot: 'screenshots/day4-timeline.png'
+    }
+];
+
+// 渲染网站更新历程
+function renderUpdateHistory() {
+    const container = document.getElementById('update-history');
+    if (!container) return;
+    
+    container.innerHTML = updateHistoryData.map(item => `
+        <div class="album-item" data-day="${item.day}" title="第${item.day}天 - ${item.title}">${item.icon}</div>
+    `).join('');
+    
+    // 添加点击事件
+    container.querySelectorAll('.album-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const day = parseInt(item.dataset.day);
+            showUpdateDetail(day);
+        });
+    });
+}
+
+// 显示更新详情弹窗
+function showUpdateDetail(day) {
+    const item = updateHistoryData.find(d => d.day === day);
+    if (!item) return;
+    
+    const modal = document.createElement('div');
+    modal.className = 'timeline-modal';
+    modal.innerHTML = `
+        <div class="timeline-modal-content">
+            <div class="timeline-modal-header">
+                <h3>第${item.day}天 - ${item.title}</h3>
+                <span class="close-btn" onclick="this.closest('.timeline-modal').remove()">&times;</span>
+            </div>
+            <div class="timeline-modal-body">
+                <div style="font-size: 4rem; text-align: center; margin: 20px 0;">${item.icon}</div>
+                <p style="text-align: center; color: var(--text-secondary);">${item.date}</p>
+                <p style="margin: 20px 0; line-height: 1.6;">${item.description}</p>
+                <div style="background: #f0f0f0; border-radius: 10px; padding: 20px; text-align: center; color: #999;">
+                    📸 截图占位<br>
+                    <small>（请手动添加 ${item.screenshot}）</small>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+    });
+    
+    document.body.appendChild(modal);
+}
+
+// ==================== 初始化 ====================
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🌸 小倩空间功能加载中...');
+    
+    // 渲染数据
+    UI.renderPosts();
+    UI.renderGuestbook();
+    
+    // 绑定事件
+    Events.init();
+    
+    // 计算诞生天数
+    calculateBirthDays();
+    
+    // 渲染网站更新历程
+    renderUpdateHistory();
+    
     console.log('✅ 功能加载完成！');
 });
 
+// 计算诞生天数
+function calculateBirthDays() {
+    // 网站诞生日期：2026年3月6日
+    const BIRTH_DATE = new Date('2026-03-06');
+    const today = new Date();
+    
+    // 计算天数差
+    const diffTime = today - BIRTH_DATE;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    
+    // 更新页面显示
+    const birthDaysEl = document.getElementById('birth-days');
+    const birthDayNumEl = document.getElementById('birth-day-num');
+    
+    if (birthDaysEl) {
+        birthDaysEl.textContent = diffDays;
+        // 添加动画效果
+        birthDaysEl.style.animation = 'pulse 2s ease-in-out';
+    }
+    
+    if (birthDayNumEl) {
+        birthDayNumEl.textContent = diffDays;
+    }
+    
+    console.log(`🎂 今天是小倩诞生的第 ${diffDays} 天`);
+}
+
+// 添加脉冲动画样式
+if (!document.getElementById('birthday-animation')) {
+    const style = document.createElement('style');
+    style.id = 'birthday-animation';
+    style.textContent = `
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 // 暴露全局变量供调试
-window.XiaoqianApp = { Storage, UI, Events };
+window.XiaoqianApp = { 
+    Storage, 
+    UI, 
+    Events,
+    updateHistoryData,
+    renderUpdateHistory,
+    showUpdateDetail,
+    calculateBirthDays
+};
