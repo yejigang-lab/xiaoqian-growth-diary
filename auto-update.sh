@@ -49,7 +49,6 @@ echo "📝 更新统计数据..."
 cd "$DIARY_DIR"
 git add -A
 git commit -m "auto: 每日更新 $DATE" || true
-git push origin master || echo "推送失败，保留本地"
+git push origin main || echo "推送失败，保留本地"
 
 echo "✅ 每日更新完成: $DATE"
-EOF
