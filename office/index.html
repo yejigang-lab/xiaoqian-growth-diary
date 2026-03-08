@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小倩商业帝国 - 总部办公室 🏢</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #d69e2e;
+            --accent-light: #ecc94b;
+            --bg-gray: #f7fafc;
+            --card-bg: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --border: #e2e8f0;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg-gray);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+        
+        /* 顶部导航 */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 0;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .header-top {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .brand-icon {
+            font-size: 2em;
+        }
+        
+        .brand-text h1 {
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+        
+        .brand-text span {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        
+        /* 导航菜单 */
+        .nav-menu {
+            background: rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .nav-item {
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 0.9em;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .nav-item:hover,
+        .nav-item.active {
+            color: white;
+            border-bottom-color: var(--accent);
+            background: rgba(255,255,255,0.05);
+        }
+        
+        /* 主容器 */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 260px 1fr 320px;
+            gap: 25px;
+        }
+        
+        /* 左侧边栏 */
+        .sidebar-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 15px rgba(26, 54, 93, 0.3);
+        }
+        
+        .profile-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .profile-role {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .profile-stat-value {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .profile-stat-label {
+            font-size: 0.75em;
+            color: var(--text-secondary);
+        }
+        
+        /* 快捷菜单 */
+        .quick-menu {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .quick-menu-title {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+        }
+        
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .menu-item:hover {
+            background: var(--bg-gray);
+        }
+        
+        .menu-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        
+        .menu-icon.blue { background: #ebf8ff; }
+        .menu-icon.green { background: #f0fff4; }
+        .menu-icon.yellow { background: #fffff0; }
+        .menu-icon.red { background: #fff5f5; }
+        .menu-icon.purple { background: #faf5ff; }
+        
+        .menu-text {
+            flex: 1;
+            font-size: 0.95em;
+        }
+        
+        .menu-badge {
+            background: var(--accent);
+            color: white;
+            font-size: 0.75em;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        /* 主内容区 */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-action {
+            font-size: 0.85em;
+            color: var(--primary-light);
+            cursor: pointer;
+        }
+        
+        /* 工作台 */
+        .workbench-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .workbench-item {
+            background: var(--bg-gray);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .workbench-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .workbench-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .workbench-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .workbench-desc {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+        
+        /* 项目列表 */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg-gray);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .project-item:hover {
+            background: #edf2f7;
+        }
+        
+        .project-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .project-status.active { background: var(--success); }
+        .project-status.pending { background: var(--warning); }
+        .project-status.delayed { background: var(--danger); }
+        
+        .project-info {
+            flex: 1;
+        }
+        
+        .project-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .project-meta {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+        
+        .project-progress {
+            width: 100px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 5px;
+        }
+        
+        /* 右侧边栏 */
+        .sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* 通知面板 */
+        .notice-panel {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .notice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .notice-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .notice-badge {
+            background: var(--danger);
+            color: white;
+            font-size: 0.75em;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        .notice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .notice-item {
+            padding: 12px;
+            background: var(--bg-gray);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .notice-item.urgent {
+            border-left-color: var(--danger);
+            background: #fff5f5;
+        }
+        
+        .notice-text {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .notice-time {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+        
+        /* 待办事项 */
+        .todo-panel {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .todo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .todo-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .todo-item:hover {
+            background: var(--bg-gray);
+        }
+        
+        .todo-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .todo-checkbox:hover {
+            border-color: var(--primary);
+        }
+        
+        .todo-text {
+            flex: 1;
+            font-size: 0.9em;
+        }
+        
+        .todo-text.done {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+        }
+        
+        .todo-priority {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .todo-priority.high { background: var(--danger); }
+        .todo-priority.medium { background: var(--warning); }
+        .todo-priority.low { background: var(--success); }
+        
+        /* 页脚 */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar-left,
+            .sidebar-right {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="header-top">
+            <div class="brand">
+                <span class="brand-icon">🏢</span>
+                <div class="brand-text">
+                    <h1>小倩商业帝国</h1>
+                    <span>总部办公室</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="../index.html" class="btn btn-secondary">🌸 返回成长日记</a>
+                <button class="btn btn-primary">+ 新建任务</button>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-container">
+                <a href="#" class="nav-item active">工作台</a>
+                <a href="#" class="nav-item">项目管理</a>
+                <a href="#" class="nav-item">文档中心</a>
+                <a href="#" class="nav-item">团队协作</a>
+                <a href="#" class="nav-item">数据中心</a>
+                <a href="#" class="nav-item">设置</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 左侧边栏 -->
+        <aside class="sidebar-left">
+            <!-- 个人资料 -->
+            <div class="profile-card">
+                <div class="profile-avatar">👩‍💼</div>
+                <div class="profile-name">小倩</div>
+                <div class="profile-role">创始人兼 CEO</div>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">12</div>
+                        <div class="profile-stat-label">项目</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">48</div>
+                        <div class="profile-stat-label">任务</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">156</div>
+                        <div class="profile-stat-label">文档</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 快捷菜单 -->
+            <div class="quick-menu">
+                <div class="quick-menu-title">快捷入口</div>
+                <div class="menu-list">
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon blue">📊</div>
+                        <span class="menu-text">数据报表</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon green">📅</div>
+                        <span class="menu-text">日程安排</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon yellow">📁</div>
+                        <span class="menu-text">档案管理</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon purple">👥</div>
+                        <span class="menu-text">团队管理</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon red">💰</div>
+                        <span class="menu-text">财务管理</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 工作台 -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2 class="card-title">🎯 我的工作台</h2>
+                    <span class="card-action">查看全部 →</span>
+                </div>
+                <div class="workbench-grid">
+                    <div class="workbench-item">
+                        <div class="workbench-icon">📝</div>
+                        <div class="workbench-title">AI创作</div>
+                        <div class="workbench-desc">内容生成与编辑</div>
+                    </div>
+                    <div class="workbench-item">
+                        <div class="workbench-icon">🤖</div>
+                        <div class="workbench-title">自动化</div>
+                        <div class="workbench-desc">工作流自动化</div>
+                    </div>
+                    <div class="workbench-item">
+                        <div class="workbench-icon">📈</div>
+                        <div class="workbench-title">数据分析</div>
+                        <div class="workbench-desc">智能数据分析</div>
+                    </div>
+                    <div class="workbench-item">
+                        <div class="workbench-icon">🎨</div>
+                        <div class="workbench-title">设计工具</div>
+                        <div class="workbench-desc">视觉设计创作</div>
+                    </div>
+                    <div class="workbench-item">
+                        <div class="workbench-icon">💼</div>
+                        <div class="workbench-title">客户管理</div>
+                        <div class="workbench-desc">CRM系统</div>
+                    </div>
+                    <div class="workbench-item">
+                        <div class="workbench-icon">📚</div>
+                        <div class="workbench-title">知识库</div>
+                        <div class="workbench-desc">团队知识沉淀</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目列表 -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2 class="card-title">📊 进行中的项目</h2>
+                    <span class="card-action">查看全部 →</span>
+                </div>
+                <div class="project-list">
+                    <div class="project-item">
+                        <div class="project-status active"></div>
+                        <div class="project-info">
+                            <div class="project-name">AI变现研究项目</div>
+                            <div class="project-meta">市场信息部 · 截止日期: 2026-03-14</div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                            <div class="progress-text">65%</div>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-status pending"></div>
+                        <div class="project-info">
+                            <div class="project-name">档案管理系统建设</div>
+                            <div class="project-meta">技术保障部 · 截止日期: 2026-03-14</div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 35%"></div>
+                            </div>
+                            <div class="progress-text">35%</div>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-status active"></div>
+                        <div class="project-info">
+                            <div class="project-name">Token消耗优化</div>
+                            <div class="project-meta">客户成功部 · 截止日期: 2026-03-10</div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 80%"></div>
+                            </div>
+                            <div class="progress-text">80%</div>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-status delayed"></div>
+                        <div class="project-info">
+                            <div class="project-name">团队知识库建设</div>
+                            <div class="project-meta">全体部门 · 截止日期: 2026-03-08</div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <div class="progress-text">45%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 右侧边栏 -->
+        <aside class="sidebar-right">
+            <!-- 通知面板 -->
+            <div class="notice-panel">
+                <div class="notice-header">
+                    <h3 class="notice-title">🔔 通知提醒</h3>
+                    <span class="notice-badge">3</span>
+                </div>
+                <div class="notice-list">
+                    <div class="notice-item urgent">
+                        <div class="notice-text">项目 "AI变现研究" 即将到期</div>
+                        <div class="notice-time">剩余 5 天</div>
+                    </div>
+                    <div class="notice-item">
+                        <div class="notice-text">新合同 "某某公司服务协议" 待审核</div>
+                        <div class="notice-time">2小时前</div>
+                    </div>
+                    <div class="notice-item">
+                        <div class="notice-text">团队周报已收集完毕</div>
+                        <div class="notice-time">今天 09:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 待办事项 -->
+            <div class="todo-panel">
+                <div class="notice-header">
+                    <h3 class="notice-title">✅ 待办事项</h3>
+                    <span class="card-action">+ 新增</span>
+                </div>
+                <div class="todo-list">
+                    <div class="todo-item">
+                        <div class="todo-checkbox">✓</div>
+                        <span class="todo-text done">审阅本周财务报表</span>
+                        <div class="todo-priority high"></div>
+                    </div>
+                    <div class="todo-item">
+                        <div class="todo-checkbox"></div>
+                        <span class="todo-text">确认AI项目里程碑</span>
+                        <div class="todo-priority high"></div>
+                    </div>
+                    <div class="todo-item">
+                        <div class="todo-checkbox"></div>
+                        <span class="todo-text">回复客户邮件</span>
+                        <div class="todo-priority medium"></div>
+                    </div>
+                    <div class="todo-item">
+                        <div class="todo-checkbox"></div>
+                        <span class="todo-text">更新团队文档</span>
+                        <div class="todo-priority low"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>© 2026 小倩商业帝国 | 总部办公室系统</div>
+            <div class="footer-links">
+                <a href="../index.html">成长日记</a>
+                <a href="#">帮助中心</a>
+                <a href="#">隐私政策</a>
+                <a href="#">联系我们</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
